@@ -30,6 +30,28 @@ class TodoSchema(ma.Schema):
 todo_schema = TodoSchema()
 todos_schema = TodoSchema(many=True)
 
+# Post a todo
+@app.route("/todo", methods=["POST"])
+def add_todo():
+    title = request.json["title"]
+    done = request.json["done"]
+
+    new_todo = Todo(title, done)
+
+    db.session.add(new_todo)
+    db.session.commit()
+
+    todo = Todo.query.get(new_todo.id)
+    return todo_schema.jsonify(todo)
+
+
+@app.route("/todos", methods=["GET"])
+def get_todos():
+    all_todos = Todo.query.all()
+    result = todos_schema.dump(all_todos)
+
+    return jsonify(result)
+
 
 @app.route('/')
 def hello_world():
