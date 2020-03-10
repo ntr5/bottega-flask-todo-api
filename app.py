@@ -64,6 +64,15 @@ def update_todo(id):
     return todo_schema.jsonify(todo)
 
 
+@app.route("/todo/<id>", methods=["DELETE"])
+def delete_todo(id):
+    todo = Todo.query.get(id)
+    db.session.delete(todo)
+    db.session.commit()
+
+    return jsonify("Todo Deleted")
+
+
 @app.route('/')
 def hello_world():
     return 'Hello, World!'
