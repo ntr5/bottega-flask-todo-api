@@ -2,14 +2,17 @@ from flask import Flask, request, jsonify
 from flask_cors import CORS
 from flask_sqlalchemy import SQLAlchemy
 from flask_marshmallow import Marshmallow
+from flask_heroku import Heroku
 import os
 
 
 app = Flask(__name__)
+heroku = Heroku(app)
 CORS(app)
 
-basedir = os.path.abspath(os.path.dirname(__file__))
-app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
+# basedir = os.path.abspath(os.path.dirname(__file__))
+# app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///" + os.path.join(basedir, "app.sqlite")
+app.config["SQLALCHEMY_DATABASE_URI"] = "postgres://wuuvzyqrlyfjrq:0c95e309b21ce1b8bd3551c96154ac2789da4882b04a0242299a9ee13e923440@ec2-34-200-101-236.compute-1.amazonaws.com:5432/dc13k35695hikd"
 
 db = SQLAlchemy(app)
 ma = Marshmallow(app)
@@ -58,10 +61,8 @@ def get_todos():
 # @app.route("/todo/<id>", methods=["GET"])
 # def get_todo(id):
 #     todo = Todo.query.get(id)
-#     result 
     
-    
-#     return jsonify(todo)
+#     return todo_schema.jsonify(todo)
 
 
 @app.route("/todo/<id>", methods=["PATCH"])
