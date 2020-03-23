@@ -55,6 +55,15 @@ def get_todos():
     return jsonify(result)
 
 
+# @app.route("/todo/<id>", methods=["GET"])
+# def get_todo(id):
+#     todo = Todo.query.get(id)
+#     result 
+    
+    
+#     return jsonify(todo)
+
+
 @app.route("/todo/<id>", methods=["PATCH"])
 def update_todo(id):
     todo = Todo.query.get(id)
